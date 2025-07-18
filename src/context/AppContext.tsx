@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, ReactNode, useState } from 'react';
+import React, { createContext, useContext, useReducer, ReactNode, useState, useEffect } from 'react';
 import { FinancialData, Document, TransactionData, FinancialStatement, CashFlowData } from '../types';
 
 interface CompanyInfo {
@@ -128,6 +128,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     expenses: 0,
     netBurn: 0
   });
+
+  // Reset backend data on every refresh
+  useEffect(() => {
+    fetch('https://clone-3-jh4k.onrender.com/reset-data/', { method: 'POST' });
+  }, []);
 
   const fetchDashboardSummary = async () => {
     try {
